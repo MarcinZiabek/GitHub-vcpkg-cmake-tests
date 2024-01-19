@@ -12,8 +12,8 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest, macos-latest-xlarge]
 
     env:
-      project_path: ${{ github.workspace }}
-      output_path: ${{ github.workspace }}/build/${{ matrix.os }}
+      project_path: .
+      output_path: build/${{ matrix.os }}
       build_type: Release
 
     steps:
@@ -37,7 +37,9 @@ jobs:
 
     - name: Download And Bootstrap VCPKG
       run: |
+        pwd
         cd ${{ env.project_path }}
+        pwd
         git clone https://github.com/Microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
       shell: bash    
@@ -46,8 +48,6 @@ jobs:
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
         pwd
-        echo 
-        echo ${{ env.project_path }}
         cd ${{ env.project_path }}
         sudo vcpkg install --recurse
       shell: bash    
@@ -55,6 +55,8 @@ jobs:
     - name: Install VCPKG Dependencies (Windows)
       if: ${{ matrix.os == 'windows-latest' }}
       run: |
+        pwd
+        cd ${{ env.project_path }}
         vcpkg install --recurse
       shell: bash   
 

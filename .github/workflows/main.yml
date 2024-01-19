@@ -43,27 +43,27 @@ jobs:
     - name: Install VCPKG Dependencies (Linux + MacOS)
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
-        cd $project_path
+        cd ${{ env.project_path }}
         sudo vcpkg install --recurse
       shell: bash    
 
     - name: Install VCPKG Dependencies (Windows)
       if: ${{ matrix.os == 'windows-latest' }}
       run: |
-        cd $project_path
+        cd ${{ env.project_path }}
         vcpkg install --recurse
       shell: bash   
 
     - name: Configure CMake
       run: >
-        cmake -B $output_path
+        cmake -B ${{ env.output_path }}
         -DCMAKE_CXX_COMPILER=clang++
         -DCMAKE_C_COMPILER=clang
         -DCMAKE_BUILD_TYPE=Release
-        -S $project_path
+        -S ${{ env.project_path }}
 
     - name: Build Package
-      run: cmake --build $output_path --config ${{ matrix.build_type }}
+      run: cmake --build ${{ env.output_path }} --config ${{ matrix.build_type }}
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3

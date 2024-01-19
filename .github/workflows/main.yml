@@ -37,11 +37,9 @@ jobs:
 
     - name: Download And Bootstrap VCPKG
       run: |
-        pwd
-        cd ${{ env.project_path }}
-        pwd
-        git clone https://github.com/Microsoft/vcpkg.git
-        ./vcpkg/bootstrap-vcpkg.sh
+        git clone https://github.com/microsoft/vcpkg.git
+        cd vcpkg
+        ./bootstrap-vcpkg.sh
       shell: bash    
 
     - name: Install VCPKG Dependencies (Linux + MacOS)

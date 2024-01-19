@@ -39,6 +39,7 @@ jobs:
       run: |
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
+        echo $(pwd)/vcpkg >> $GITHUB_PATH
         cd ${{ env.project_path }}
         ../vcpkg install --recurse
       shell: bash    

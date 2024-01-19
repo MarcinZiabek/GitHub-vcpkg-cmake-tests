@@ -44,6 +44,9 @@ jobs:
     - name: Install VCPKG Dependencies (Linux + MacOS)
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
+        pwd
+        echo 
+        echo ${{ env.project_path }}
         cd ${{ env.project_path }}
         sudo vcpkg install --recurse
       shell: bash    
@@ -51,6 +54,9 @@ jobs:
     - name: Install VCPKG Dependencies (Windows)
       if: ${{ matrix.os == 'windows-latest' }}
       run: |
+        pwd
+        echo 
+        echo ${{ env.project_path }}
         cd ${{ env.project_path }}
         vcpkg install --recurse
       shell: bash   

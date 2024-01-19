@@ -38,8 +38,15 @@ jobs:
     - name: Download And Bootstrap VCPKG
       run: |
         git clone https://github.com/microsoft/vcpkg.git
-        cd vcpkg
-        ./bootstrap-vcpkg.sh
+        ./vcpkg/bootstrap-vcpkg.sh
+      shell: bash    
+
+    - name: Install VCPKG Dependencies MacOS ARM64
+      if: ${{ matrix.os == 'macos-latest-xlarge' }}
+      run: |
+        pwd
+        cd ${{ env.project_path }}
+        vcpkg install --recurse
       shell: bash    
 
     - name: Install VCPKG Dependencies (Linux + MacOS)

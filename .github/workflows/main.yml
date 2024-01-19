@@ -37,6 +37,7 @@ jobs:
 
     - name: Download And Bootstrap VCPKG
       run: |
+        cd ${{ env.project_path }}
         git clone https://github.com/Microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
       shell: bash    

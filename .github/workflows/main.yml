@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
 
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest, macos-13-xlarge]
+        os: [windows-latest, ubuntu-latest, macos-latest, macos-latest-xlarge]
 
     env:
       project_path: ${{ github.workspace }}

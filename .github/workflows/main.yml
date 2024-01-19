@@ -14,6 +14,7 @@ jobs:
     env:
       project_path: ${{ github.workspace }}
       output_path: ${{ github.workspace }}/build/${{ matrix.os }}
+      build_type: Release
 
     steps:
     - name: Download Sources
@@ -63,7 +64,7 @@ jobs:
         -S ${{ env.project_path }}
 
     - name: Build Package
-      run: cmake --build ${{ env.output_path }} --config ${{ matrix.build_type }}
+      run: cmake --build ${{ env.output_path }} --config ${{ env.build_type }}
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3

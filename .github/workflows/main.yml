@@ -9,10 +9,10 @@ jobs:
       fail-fast: false
 
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest, macos-latest-xlarge]
+        os: [windows-latest, ubuntu-latest, macos-latest, macos-latest-large]
 
     env:
-      project_path: .
+      project_path: native
       output_path: build/${{ matrix.os }}
       build_type: Release
 

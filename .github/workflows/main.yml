@@ -13,7 +13,7 @@ jobs:
 
     env:
       project_path: ${{ github.workspace }}
-      output_path: $project_path/build/${{ matrix.os }}
+      output_path: ${{ env.project_path }}/build/${{ matrix.os }}
 
     steps:
     - name: Download Sources

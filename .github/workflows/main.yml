@@ -40,7 +40,7 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         cd vcpkg
         ./bootstrap-vcpkg.sh
-        echo $(pwd) >> $GITHUB_PATH
+        echo VCPKG_ROOT=$(pwd) >> $GITHUB_PATH
       shell: bash    
 
     - name: Install VCPKG Dependencies (Linux + MacOS)

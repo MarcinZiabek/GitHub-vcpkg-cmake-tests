@@ -55,10 +55,6 @@ jobs:
     - name: Install VCPKG Dependencies (Windows)
       if: ${{ matrix.os == 'windows-latest' }}
       run: |
-        pwd
-        echo 
-        echo ${{ env.project_path }}
-        cd ${{ env.project_path }}
         vcpkg install --recurse
       shell: bash   
 

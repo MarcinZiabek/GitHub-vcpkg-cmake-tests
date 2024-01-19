@@ -40,7 +40,7 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
         cd ${{ env.project_path }}
-        vcpkg install --recurse
+        ../vcpkg install --recurse
       shell: bash    
 
     - name: Install VCPKG Dependencies MacOS ARM64

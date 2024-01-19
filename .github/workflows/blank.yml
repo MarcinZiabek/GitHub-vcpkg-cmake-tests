@@ -1,0 +1,75 @@
+name: Build QuestPDF native artifacts
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-13-xlarge]
+
+    env:
+      project_path: ${{ github.workspace }}
+      output_path: $project_path/build/${{ matrix.os }}
+
+    steps:
+    - name: Download Sources
+      uses: actions/checkout@v3
+
+    - name: Install Linux Dependencies
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        sudo apt-get install autoconf-archive
+        sudo apt-get install freeglut3-dev
+      shell: bash
+
+    - name: Install MacOS Dependencies
+      if: ${{ matrix.os == 'macos-latest' }}
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        brew install automake
+        brew install autoconf-archive
+      shell: bash    
+
+    - name: Download And Bootstrap VCPKG
+      run: |
+        git clone https://github.com/Microsoft/vcpkg.git
+        ./vcpkg/bootstrap-vcpkg.sh
+      shell: bash    
+
+    - name: Install VCPKG Dependencies (Linux + MacOS)
+      if: ${{ matrix.os != 'windows-latest' }}
+      run: |
+        cd $project_path
+        sudo vcpkg install --recurse
+      shell: bash    
+
+    - name: Install VCPKG Dependencies (Windows)
+      if: ${{ matrix.os == 'windows-latest' }}
+      run: |
+        cd $project_path
+        vcpkg install --recurse
+      shell: bash   
+
+    - name: Configure CMake
+      run: >
+        cmake -B $output_path
+        -DCMAKE_CXX_COMPILER=clang++
+        -DCMAKE_C_COMPILER=clang
+        -DCMAKE_BUILD_TYPE=Release
+        -S $project_path
+
+    - name: Build Package
+      run: cmake --build $output_path --config ${{ matrix.build_type }}
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build Package
+        path: |
+          **/*.so
+          **/*.dylib
+          **/*.dll    

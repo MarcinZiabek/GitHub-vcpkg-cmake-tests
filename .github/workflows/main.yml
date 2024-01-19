@@ -39,7 +39,7 @@ jobs:
       run: |
         git clone https://github.com/microsoft/vcpkg.git
         cd vcpkg
-        ./bootstrap-vcpkg.sh
+        sudo ./bootstrap-vcpkg.sh
         export VCPKG_ROOT=$(pwd)
       shell: bash    
 
